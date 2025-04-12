@@ -12,6 +12,7 @@ RUN git clone --recurse-submodules https://github.com/Akegarasu/lora-scripts
 
 WORKDIR /app/lora-scripts
 RUN pip install -U pip
+RUN pip install -U huggingface_hub[cli]
 RUN pip install torch==2.4.1+cu124 torchvision==0.19.1+cu124 xformers --extra-index-url https://download.pytorch.org/whl/cu124
 RUN pip install -U setuptools wheel && pip install --upgrade -r requirements.txt
 RUN apt update && apt install -y libgl1-mesa-glx libglib2.0-dev
