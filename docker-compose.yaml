@@ -1,30 +1,33 @@
 services:
-  lota-scripts:
-    image: registry.cn-hangzhou.aliyuncs.com/joybo/lota-scripts:v2025.4.12-action
-    container_name: lota-scripts
-    hostname: lota-scripts
-    environment:
-      - TZ=Asia/Shanghai
-      # - NVIDIA_VISIBLE_DEVICES=0
-    volumes:
-      - ./:./app/lora-scripts
+  trainer:
+    container_name: trainer
+    hostname: trainer
+    image: registry.cn-hangzhou.aliyuncs.com/joybo/lora-scripts:v2025.04.12-action
     ports:
       - "28000:28000"
+    networks:
+      - trainer
+    volumes:
+      - ./ComfyUI/models:/models
+      - ./huggingface:/app/huggingface
+      - ./output:/app/output
+    environment:
+      - HF_HOME=huggingface
+      - HF_ENDPOINT=https://hf-mirror.com
+      - PYTHONUTF8=1
+      - HF_HOME=/app
+    security_opt:
+      - "label=type:nvidia_container_t"
     runtime: nvidia
     deploy:
       resources:
         reservations:
           devices:
-          - driver: nvidia
-            # device_ids: ['0']
-            capabilities: [gpu]
-    stdin_open: true
-    tty: true
-    restart: no
-    networks:
-      - lora-scripts
+            - driver: nvidia
+              device_ids: ['0','1']
+              capabilities: [gpu]
 
 networks:
-  lora-scripts:
+  trainer:
     driver: bridge
-    name: lora-scripts
+    name: trainer
