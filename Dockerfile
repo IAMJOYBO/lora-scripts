@@ -14,6 +14,6 @@ WORKDIR /app/lora-scripts
 RUN pip install -U pip
 RUN pip install torch==2.4.1+cu124 torchvision==0.19.1+cu124 xformers --extra-index-url https://download.pytorch.org/whl/cu124
 RUN pip install -U setuptools wheel && pip install --upgrade -r requirements.txt
-RUN apt-get install -y libgl1-mesa-glx
+RUN apt update && apt install -y libgl1-mesa-glx libglib2.0-dev
 
 CMD ["python", "gui.py", "--listen"]
