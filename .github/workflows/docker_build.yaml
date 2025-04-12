@@ -23,17 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: 删除缓存
-      uses: actions/cache@v3
-      with:
-        path: |
-          node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-      env:
-        ACTIONS_CACHE_DEBUG: true
-
     - name: 获取当前日期
       id: date
       run: echo "::set-output name=date::$(date +v%Y.%m.%d)"
@@ -45,22 +34,6 @@ jobs:
         region-id: ${{ env.server-id }} # 务必正确填写镜像容器服务的登录地址
         username: "${{ secrets.REGISTRY_USERNAME }}" # 引用GitHub repo设置的镜像容器服务用户名
         password: "${{ secrets.REGISTRY_PASSWORD }}" # 引用GitHub repo设置的镜像容器服务密码
-        
-      # 增加可用空间
-    - name: 关闭swap
-      run: sudo swapoff -a && sudo rm -rf /mnt/swapfile
-    - name: 删除所有Docker镜像
-      run: sudo docker image prune --all --force
-    - name: 删除CodeQL库
-      run: sudo rm -rf /opt/hostedtoolcache/CodeQL
-    - name: 删除ghc库
-      run: sudo rm -rf /opt/ghc
-    - name: 删除android库
-      run: sudo rm -rf /usr/local/lib/android
-    - name: 删除dotnet库
-      run: sudo rm -rf /usr/share/dotnet
-    - name: 删除缓存
-      run: sudo rm -rf /opt/*cache*
         
     - name: 构建和上传Docker镜像
       run: |
