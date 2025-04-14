@@ -20,12 +20,14 @@ WORKDIR /app/lora-scripts
 RUN pip install xformers==0.0.27.post2 --no-deps && pip install -r requirements.txt && rm -rf ~/.cache/pip/*
 
 # 更新 训练程序 stable 版本依赖
+RUN git config --global http.sslVerify false
+RUN rm -rf /app/lora-scripts/scripts/stable && cd /app/lora-scripts/scripts/ && git clone --recurse-submodules https://github.com/kohya-ss/sd-scripts.git stable
 WORKDIR /app/lora-scripts/scripts/stable
 RUN pip install -r requirements.txt && rm -rf ~/.cache/pip/*
 
 # 更新 训练程序 dev 版本依赖
-WORKDIR /app/lora-scripts/scripts/dev
-RUN pip install -r requirements.txt && rm -rf ~/.cache/pip/*
+# WORKDIR /app/lora-scripts/scripts/dev
+# RUN pip install -r requirements.txt && rm -rf ~/.cache/pip/*
 
 WORKDIR /app/lora-scripts
 
