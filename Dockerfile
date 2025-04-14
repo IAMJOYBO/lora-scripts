@@ -38,7 +38,7 @@ WORKDIR /app/lora-scripts
 RUN pip install opencv-fixer==0.2.5 && python -c "from opencv_fixer import AutoFix; AutoFix()" \
     pip install opencv-python-headless && apt install ffmpeg libsm6 libxext6 libgl1 -y && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ~/.cache/pip/*
 
-RUN pip install onnxruntime onnxruntime-gpu && rm -rf ~/.cache/pip/*
+RUN pip install onnxruntime onnxruntime-gpu accelerate==0.33.0 lion-pytorch==0.1.2 prodigyopt==1.1.2 safetensors==0.4.4 && rm -rf ~/.cache/pip/*
 
 RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple
 RUN pip config set install.trusted-host mirrors.aliyun.com
