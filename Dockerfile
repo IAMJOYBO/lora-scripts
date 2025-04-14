@@ -34,7 +34,7 @@ WORKDIR /app/lora-scripts
 # - https://soulteary.com/2024/01/07/fix-opencv-dependency-errors-opencv-fixer.html
 # - https://blog.csdn.net/qq_50195602/article/details/124188467
 RUN pip install opencv-fixer==0.2.5 && python -c "from opencv_fixer import AutoFix; AutoFix()" \
-    pip install opencv-python-headless && apt install ffmpeg libsm6 libxext6 libgl1 -y && apt-get clean && rm -rf /var/lib/apt/lists/* &&  && rm -rf ~/.cache/pip/*
+    pip install opencv-python-headless && apt install ffmpeg libsm6 libxext6 libgl1 -y && apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf ~/.cache/pip/*
 
 RUN pip install onnxruntime onnxruntime-gpu && rm -rf ~/.cache/pip/*
 
