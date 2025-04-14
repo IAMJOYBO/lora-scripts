@@ -17,7 +17,7 @@ WORKDIR /app/lora-scripts
 #     pip config set install.trusted-host 'pypi.tuna.tsinghua.edu.cn'
 
 # 初次安装依赖
-RUN pip install -r requirements.txt && pip install --force-reinstall xformers==v0.0.28.post1 torch==2.4.1+cu21 torchvision==0.19.1 torchaudio==2.4.1+cu21 --index-url https://download.pytorch.org/whl/cu121 && rm -rf ~/.cache/pip/*
+RUN pip install -r requirements.txt && pip install --force-reinstall xformers==v0.0.28.post1 torch==2.4.1+cu121 torchvision==0.19.1 torchaudio==2.4.1+cu121 --index-url https://download.pytorch.org/whl/cu121 && pip install -U 'protobuf<5,>=3.20' --no-deps && rm -rf ~/.cache/pip/*
 
 # 更新 训练程序 stable 版本依赖
 RUN rm -rf /app/lora-scripts/scripts/stable && git clone --recurse-submodules https://github.com/kohya-ss/sd-scripts.git stable
