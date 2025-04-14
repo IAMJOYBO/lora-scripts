@@ -17,15 +17,15 @@ WORKDIR /app/lora-scripts
 #     pip config set install.trusted-host 'pypi.tuna.tsinghua.edu.cn'
 
 # 初次安装依赖
-RUN pip install xformers==0.0.27.post2 --no-deps && pip install -r requirements.txt
+RUN pip install xformers==0.0.27.post2 --no-deps && pip install -r requirements.txt && rm -rf ~/.cache/pip/*
 
 # 更新 训练程序 stable 版本依赖
 WORKDIR /app/lora-scripts/scripts/stable
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt && rm -rf ~/.cache/pip/*
 
 # 更新 训练程序 dev 版本依赖
 WORKDIR /app/lora-scripts/scripts/dev
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt && rm -rf ~/.cache/pip/*
 
 WORKDIR /app/lora-scripts
 
@@ -34,7 +34,9 @@ WORKDIR /app/lora-scripts
 # - https://soulteary.com/2024/01/07/fix-opencv-dependency-errors-opencv-fixer.html
 # - https://blog.csdn.net/qq_50195602/article/details/124188467
 RUN pip install opencv-fixer==0.2.5 && python -c "from opencv_fixer import AutoFix; AutoFix()" \
-    pip install opencv-python-headless && apt install ffmpeg libsm6 libxext6 libgl1 -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+    pip install opencv-python-headless && apt install ffmpeg libsm6 libxext6 libgl1 -y && apt-get clean && rm -rf /var/lib/apt/lists/* &&  && rm -rf ~/.cache/pip/*
+
+RUN pip install onnxruntime onnxruntime-gpu && rm -rf ~/.cache/pip/*
 
 RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple
 RUN pip config set install.trusted-host mirrors.aliyun.com
