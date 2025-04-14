@@ -22,7 +22,21 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}  # 检测main分支是否有更新
     runs-on: ubuntu-latest
     steps:
-
+    # 增加可用空间
+    - name: 关闭swap
+      run: sudo swapoff -a && sudo rm -rf /mnt/swapfile
+    - name: 删除所有Docker镜像
+      run: sudo docker image prune --all --force
+    - name: 删除CodeQL库
+      run: sudo rm -rf /opt/hostedtoolcache/CodeQL
+    - name: 删除ghc库
+      run: sudo rm -rf /opt/ghc
+    - name: 删除android库
+      run: sudo rm -rf /usr/local/lib/android
+    - name: 删除dotnet库
+      run: sudo rm -rf /usr/share/dotnet
+    - name: 删除缓存
+      run: sudo rm -rf /opt/*cache*
     - name: 获取当前日期
       id: date
       run: echo "::set-output name=date::$(date +v%Y.%m.%d)"
