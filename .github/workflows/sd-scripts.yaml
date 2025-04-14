@@ -51,7 +51,7 @@ jobs:
         
     - name: 构建和上传Docker镜像
       run: |
-        docker build -t ${{ env.server }}/${{ env.own }}/${{ env.repo }}:${{ steps.date.outputs.date }}-action-sd-scripts -t Dockerfile-sd-scripts .
+        docker build -t ${{ env.server }}/${{ env.own }}/${{ env.repo }}:${{ steps.date.outputs.date }}-action-sd-scripts -f Dockerfile-sd-scripts .
         docker push  ${{ env.server }}/${{ env.own }}/${{ env.repo }}:${{ steps.date.outputs.date }}-action-sd-scripts
     - name: Docker Pull 命令
       run: echo "docker pull ${{ env.server }}/${{ env.own }}/${{ env.repo }}:${{ steps.date.outputs.date }}-action-sd-scripts"
