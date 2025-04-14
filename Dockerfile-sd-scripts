@@ -9,9 +9,10 @@ WORKDIR /app
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && bash Miniconda3-latest-Linux-x86_64.sh -b -p /app/conda && rm -rf Miniconda3-latest-Linux-x86_64.sh
 RUN /app/conda/bin/conda init
 ENV PATH=/app/miniconda/bin:$PATH
+ENV CONDA=/app/miniconda/bin
 
-RUN echo yes | conda create --name sd-scripts python=3.12
-SHELL ["conda", "run", "-n", "sd-scripts", "/bin/bash", "-c"]
+RUN echo yes | $CONDA/conda create --name sd-scripts python=3.12
+SHELL ["$CONDA/conda", "run", "-n", "sd-scripts", "/bin/bash", "-c"]
 RUN conda activate sd-scripts
 
 RUN git clone https://github.com/kohya-ss/sd-scripts.git
