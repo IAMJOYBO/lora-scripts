@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/cuda:12.6.3-cudnn-runtime-ubuntu24.04
+FROM nvcr.io/nvidia/cuda:12.8.1-cudnn-runtime-ubuntu24.04
 ENV TZ=Asia/Shanghai
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -15,7 +15,8 @@ SHELL ["conda", "run", "-n", "sd-scripts", "/bin/bash", "-c"]
 
 RUN git clone https://github.com/kohya-ss/sd-scripts.git
 WORKDIR /app/sd-scripts
-RUN pip install -U xformers torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126 && pip install -r requirements.txt && pip cache purge
+RUN pip install https://huggingface.co/czmahi/xformers-windows-torch2.8-cu128-py312/resolve/main/xformers-0.0.30%2Bc5c0720c.d20250413-cp312-cp312-win_amd64.whl --no-deps && pip cache purge
+RUN pip install -U torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128 && pip install -r requirements.txt && pip cache purge
 
 RUN rm -rf /etc/apt/sources.list && rm -rf /etc/apt/sources.list.d/*ubuntu* && wget https://github.com/IAMJOYBO/lora-scripts/raw/refs/heads/main/sources-24.04.list -O /etc/apt/sources.list
 RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple && pip config set install.trusted-host mirrors.aliyun.com
