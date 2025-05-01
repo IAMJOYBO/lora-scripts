@@ -15,7 +15,7 @@ SHELL ["conda", "run", "-n", "sd-scripts", "/bin/bash", "-c"]
 
 RUN git clone https://github.com/kohya-ss/sd-scripts.git
 WORKDIR /app/sd-scripts
-RUN wget https://huggingface.co/czmahi/xformers-windows-torch2.8-cu128-py312/resolve/main/xformers-0.0.30%2B3abeaa9e.d20250427-cp312-cp312-win_amd64.whl?download=true -O xformers-0.0.30%2B3abeaa9e.d20250427-cp312-cp312-win_amd64.whl && pip install xformers-0.0.30%2B3abeaa9e.d20250427-cp312-cp312-win_amd64.whl --no-deps && rm -rf xformers-0.0.30%2B3abeaa9e.d20250427-cp312-cp312-win_amd64.whl && pip cache purge
+RUN pip install -v -U git+https://github.com/facebookresearch/xformers.git --no-build-isolation && pip cache purge
 RUN pip install -U torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128 && pip install -r requirements.txt && pip cache purge
 
 RUN rm -rf /etc/apt/sources.list && rm -rf /etc/apt/sources.list.d/*ubuntu* && wget https://github.com/IAMJOYBO/lora-scripts/raw/refs/heads/main/sources-24.04.list -O /etc/apt/sources.list
